@@ -86,6 +86,10 @@
               <input type="email" class="form-control" id="patientEmail" required>
             </div>
             <div class="mb-3">
+              <label class="form-label">Your Contact Number</label>
+              <input type="tel" class="form-control" id="patientmob" required>
+            </div>
+            <div class="mb-3">
               <label class="form-label">Preferred Date</label>
               <input type="date" class="form-control" id="appointmentDate" required>
             </div>
@@ -132,6 +136,7 @@
       const doctor = document.getElementById('doctorName').value;
       const name = document.getElementById('patientName').value;
       const email = document.getElementById('patientEmail').value;
+      const mob = document.getElementById('patientmob').value;
       const date = document.getElementById('appointmentDate').value;
 
       let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
@@ -161,13 +166,13 @@
       }
 
       // Save booking
-      appointments.push({ doctor, name, email, date });
+      appointments.push({ doctor, name, email, mob,date });
       localStorage.setItem('appointments', JSON.stringify(appointments));
 
       // Show confirmation
       messageBox.innerHTML = `
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-          ✅ Appointment confirmed with <b>${doctor}</b> on <b>${date}</b>.
+          ✅ Appointment Request with <b>${doctor}</b> on <b>${date}</b> is stored manager will send confirmation on your <b>${mob}</b> number.
           <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>`;
       
@@ -177,4 +182,3 @@
   </script>
 </body>
 </html>
-
