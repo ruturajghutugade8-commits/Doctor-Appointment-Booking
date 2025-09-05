@@ -30,8 +30,8 @@
           <img src="C:\Users\Ruturaj\Desktop\All Projects\Doctor Appoinment Book\Dr. Asha Verma.png" class="card-img-top" alt="Doctor">
           <div class="card-body text-center">
             <h5 class="card-title">Dr. Asha Verma</h5>
-            <p class="card-text">Cardiologist | Mon-sat (10AM - 10PM)</p>
-            <p class="card-text">Appointment Slot Mon-sat (3PM - 4.30PM) </p>
+            <p class="card-text">Cardiologist | Mon-Sat (10AM - 10PM)</p>
+            <p class="card-text"><b>Appointment Slot:</b> Mon-Sat (3PM - 4:30PM)</p>
             <button class="btn btn-primary" onclick="openBooking('Dr. Asha Verma')">Book Appointment</button>
           </div>
         </div>
@@ -43,7 +43,7 @@
           <div class="card-body text-center">
             <h5 class="card-title">Dr. Rohan Sharma</h5>
             <p class="card-text">Dermatologist | Mon-Sat (11AM - 10PM)</p>
-            <p class="card-text">Only Mon,Wed,Sat Appointment Slot (1PM - 3PM) </p>
+            <p class="card-text"><b>Appointment Slot:</b> Only Mon, Wed, Sat (1PM - 3PM)</p>
             <button class="btn btn-primary" onclick="openBooking('Dr. Rohan Sharma')">Book Appointment</button>
           </div>
         </div>
@@ -55,7 +55,7 @@
           <div class="card-body text-center">
             <h5 class="card-title">Dr. Neha Patel</h5>
             <p class="card-text">Pediatrician | Mon-Sat (9AM - 9PM)</p>
-            <p class="card-text">Only Mon,Wed,Sat Appointment Slot (11AM - 1PM) </p>
+            <p class="card-text"><b>Appointment Slot:</b> Only Mon, Wed, Sat (11AM - 1PM)</p>
             <button class="btn btn-primary" onclick="openBooking('Dr. Neha Patel')">Book Appointment</button>
           </div>
         </div>
@@ -110,6 +110,22 @@
       modal.show();
     }
 
+    function isDoctorAvailable(doctor, date) {
+      const day = new Date(date).toLocaleString("en-US", { weekday: "long" });
+
+      if (doctor === "Dr. Asha Verma") {
+        // Mon-Sat
+        return day !== "Sunday";
+      } else if (doctor === "Dr. Rohan Sharma") {
+        // Only Mon, Wed, Sat
+        return (day === "Monday" || day === "Wednesday" || day === "Saturday");
+      } else if (doctor === "Dr. Neha Patel") {
+        // Only Mon, Wed, Sat
+        return (day === "Monday" || day === "Wednesday" || day === "Saturday");
+      }
+      return false;
+    }
+
     form.addEventListener('submit', function(e) {
       e.preventDefault();
 
@@ -119,6 +135,17 @@
       const date = document.getElementById('appointmentDate').value;
 
       let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+
+      // Check doctor availability
+      if (!isDoctorAvailable(doctor, date)) {
+        messageBox.innerHTML = `
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            ⚠️ ${doctor} is <b>not available</b> on <b>${date}</b>.
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>`;
+        modal.hide();
+        return;
+      }
 
       // Check if doctor already booked on this date
       const isBooked = appointments.some(app => app.doctor === doctor && app.date === date);
@@ -150,3 +177,4 @@
   </script>
 </body>
 </html>
+
