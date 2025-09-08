@@ -67,6 +67,7 @@
         <div class="modal-header">
           <h5 class="modal-title">Book Appointment</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          <button onclick="window.location.href='manager.html'" class="btn btn-success w-100">All Booked Appointments</button>
         </div>
         <div class="modal-body">
           <form id="appointmentForm">
@@ -169,7 +170,7 @@
       // Show confirmation
       messageBox.innerHTML = `
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-          ✅ Appointment Request with <b>${doctor}</b> on <b>${date}</b> is stored manager will send confirmation on your <b>${mob}</b> number.
+          ✅ Appointment Request with <b>${doctor}</b> on <b>${date}</b> is stored, Manager will send you confirmation on your <b>${mob}</b> number.
           <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>`;
       
